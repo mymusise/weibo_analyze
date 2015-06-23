@@ -1,0 +1,91 @@
+五大函数：
+	1.获取某人粉丝信息(get_one_fans)
+	2.获取某人的具体信息(get_one_info)
+	3.获取某条微薄评论信息(get_weibo_comment)
+	4.获取某人发过的微薄信息(get_one_weibo)
+	5.获取某个关键字的搜索结果(get_search)
+
+API说明：
+	调用以上5个函数前，必须得定义个webdriver：
+		my_driver=webdriver.Firefox()
+	
+	然后登录：
+		login_2(my_driver,YOUR_USER_NAME,YOUR_PASS_WORD)
+	然后就可使用以上五大函数。
+
+	def get_one_fans_Or_attention(my_driver,userid,Idd)
+		my_driver:	前面定义好的webdriver
+		userid:		用户的id（如：5209795631）
+		Idd:		0-抓取关注信息；1-抓取粉丝信息
+	返回：容器fans[] 成员类型：
+		class Fans:
+			username=''	#用户名
+			userid=''	#用户id
+			sex=''		#用户性别
+			useraddr=""	#用户住址
+			data=['0','0','0']	#关注数，粉丝数，微薄数
+	
+	def get_one_info(my_driver,userid):
+		返回 String person_all_info
+
+	def get_one_weibo(my_driver,userid):
+		返回 容器weibos[] 成员类型：
+			class Weibo_of_ones:
+				content=""
+				link=""		#微薄链接
+				username=""
+				userid=""
+				source_content=""	#原文信息
+				source_link=""		#原文地址
+				time=""
+				stat=""			#转发数，评论数，赞
+
+	def get_weibo_comment(my_driver,link):
+		link:某条微博的链接地址，如（http://weibo.com/1918656457/Br1qVpOku）
+		返回 Comment_of_weibo对象 ：
+			class Comment_of_weibo:
+				content=""
+				username=""
+				userid=""
+				time=''
+				stat=''
+				comments=[]	#所有评论 对象为Comment
+				forwards=[]	#所有转发 对象为Forward
+			class Forward:
+				content=''	#内容
+				username=''
+				userid=''
+				link=''
+				time=''
+			class Comment:
+				content=''
+				time=''
+				username=''
+				userid=''
+
+			
+	
+	def get_search(my_driver,key_word):
+		ker_word:某个关键字
+		返回： 容器weibos[] 成员对象为Comment_of_weibo
+
+
+使用：
+	Example:
+------------test.py----------
+from get import *
+def test():
+	my_driver=webdriver.Firefox()
+	login_2(my_driver,'','')
+	print get_one_fans(my_driver,'3173516772')
+if __name__ == '__main__':
+	test()
+
+依赖环境：
+	python2.7	,selenium
+	install selenium(Ubuntu 12.04 example):
+		$sudo apt-get install python-pip #if you didn't install pip
+		$sudo pip install selenium
+
+
+
